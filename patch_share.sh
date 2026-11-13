@@ -1,0 +1,1 @@
+sed -i 's/<QRCodeSVG value={qrUrl} size={isInsta ? 120 : 160} level="H" includeMargin={false} \/>/<QRCodeSVG value={qrUrl} size={isInsta ? 120 : 160} level="H" includeMargin={true} fgColor="#000000" bgColor="#ffffff" \/>/g' components/ShareCardModal.tsx
