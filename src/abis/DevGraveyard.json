@@ -1,0 +1,622 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" },
+      { "indexed": true, "internalType": "address", "name": "author", "type": "address" }
+    ],
+    "name": "ConfessionPosted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" },
+      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+      { "indexed": false, "internalType": "bool", "name": "isCandle", "type": "bool" }
+    ],
+    "name": "ConfessionReacted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "graveId", "type": "uint256" },
+      { "indexed": true, "internalType": "uint256", "name": "eulogyId", "type": "uint256" },
+      { "indexed": true, "internalType": "address", "name": "author", "type": "address" }
+    ],
+    "name": "EulogyAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "graveId", "type": "uint256" },
+      { "indexed": true, "internalType": "uint256", "name": "eulogyId", "type": "uint256" }
+    ],
+    "name": "EulogyDeleted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "follower", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "following", "type": "address" }
+    ],
+    "name": "Followed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" },
+      { "indexed": true, "internalType": "address", "name": "owner", "type": "address" },
+      { "indexed": false, "internalType": "string", "name": "projectName", "type": "string" }
+    ],
+    "name": "GraveCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" },
+      { "indexed": true, "internalType": "address", "name": "owner", "type": "address" }
+    ],
+    "name": "GraveDeleted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "dispatchId", "type": "uint256" },
+      { "indexed": true, "internalType": "uint256", "name": "graveId", "type": "uint256" },
+      { "indexed": true, "internalType": "address", "name": "fromUser", "type": "address" },
+      { "indexed": false, "internalType": "address", "name": "toUser", "type": "address" }
+    ],
+    "name": "GraveDispatched",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" },
+      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+      { "indexed": false, "internalType": "bool", "name": "isRespected", "type": "bool" }
+    ],
+    "name": "GraveRespected",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" },
+      { "indexed": false, "internalType": "string", "name": "resurrectionNote", "type": "string" }
+    ],
+    "name": "GraveResurrected",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "wallet", "type": "address" },
+      { "indexed": false, "internalType": "string", "name": "username", "type": "string" }
+    ],
+    "name": "ProfileCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "wallet", "type": "address" },
+      { "indexed": false, "internalType": "string", "name": "avatarUrl", "type": "string" }
+    ],
+    "name": "ProfileUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "follower", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "following", "type": "address" }
+    ],
+    "name": "Unfollowed",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_username", "type": "string" }
+    ],
+    "name": "checkUsername",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_projectName", "type": "string" },
+      { "internalType": "string", "name": "_causeOfDeath", "type": "string" },
+      { "internalType": "string", "name": "_livedFor", "type": "string" },
+      { "internalType": "string", "name": "_lessonLearned", "type": "string" },
+      { "internalType": "string", "name": "_techStack", "type": "string" },
+      { "internalType": "string", "name": "_githubLink", "type": "string" },
+      { "internalType": "bool", "name": "_isAnonymous", "type": "bool" }
+    ],
+    "name": "createGrave",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_username", "type": "string" },
+      { "internalType": "string", "name": "_avatarUrl", "type": "string" },
+      { "internalType": "string", "name": "_bio", "type": "string" },
+      { "internalType": "string", "name": "_github", "type": "string" },
+      { "internalType": "string", "name": "_instagram", "type": "string" },
+      { "internalType": "string", "name": "_whatsapp", "type": "string" }
+    ],
+    "name": "createProfile",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_graveId", "type": "uint256" },
+      { "internalType": "uint256", "name": "_eulogyId", "type": "uint256" }
+    ],
+    "name": "deleteEulogy",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_graveId", "type": "uint256" }
+    ],
+    "name": "deleteGrave",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_graveId", "type": "uint256" },
+      { "internalType": "address", "name": "_toUser", "type": "address" }
+    ],
+    "name": "dispatchGrave",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_graveId", "type": "uint256" },
+      { "internalType": "string", "name": "_text", "type": "string" }
+    ],
+    "name": "dropEulogy",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_target", "type": "address" }
+    ],
+    "name": "follow",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllGraveIds",
+    "outputs": [{ "internalType": "uint256[]", "name": "", "type": "uint256[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_id", "type": "uint256" }
+    ],
+    "name": "getConfession",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "address", "name": "author", "type": "address" },
+          { "internalType": "string", "name": "text", "type": "string" },
+          { "internalType": "string", "name": "color", "type": "string" },
+          { "internalType": "int8", "name": "rotation", "type": "int8" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" },
+          { "internalType": "uint256", "name": "skulls", "type": "uint256" },
+          { "internalType": "uint256", "name": "candles", "type": "uint256" }
+        ],
+        "internalType": "struct DevGraveyard.Confession",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getConfessionCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_limit", "type": "uint256" },
+      { "internalType": "uint256", "name": "_offset", "type": "uint256" }
+    ],
+    "name": "getConfessions",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "address", "name": "author", "type": "address" },
+          { "internalType": "string", "name": "text", "type": "string" },
+          { "internalType": "string", "name": "color", "type": "string" },
+          { "internalType": "int8", "name": "rotation", "type": "int8" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" },
+          { "internalType": "uint256", "name": "skulls", "type": "uint256" },
+          { "internalType": "uint256", "name": "candles", "type": "uint256" }
+        ],
+        "internalType": "struct DevGraveyard.Confession[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_user", "type": "address" }
+    ],
+    "name": "getDispatchedGraves",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "uint256", "name": "graveId", "type": "uint256" },
+          { "internalType": "address", "name": "fromUser", "type": "address" },
+          { "internalType": "address", "name": "toUser", "type": "address" },
+          { "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+        ],
+        "internalType": "struct DevGraveyard.DispatchedGrave[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_graveId", "type": "uint256" }
+    ],
+    "name": "getEulogies",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "address", "name": "author", "type": "address" },
+          { "internalType": "string", "name": "text", "type": "string" },
+          { "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+        ],
+        "internalType": "struct DevGraveyard.Eulogy[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_user", "type": "address" }
+    ],
+    "name": "getFollowers",
+    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_user", "type": "address" }
+    ],
+    "name": "getFollowing",
+    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_graveId", "type": "uint256" }
+    ],
+    "name": "getGrave",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "address", "name": "owner", "type": "address" },
+          { "internalType": "string", "name": "projectName", "type": "string" },
+          { "internalType": "string", "name": "causeOfDeath", "type": "string" },
+          { "internalType": "string", "name": "livedFor", "type": "string" },
+          { "internalType": "string", "name": "lessonLearned", "type": "string" },
+          { "internalType": "string", "name": "techStack", "type": "string" },
+          { "internalType": "string", "name": "githubLink", "type": "string" },
+          { "internalType": "bool", "name": "isAnonymous", "type": "bool" },
+          { "internalType": "uint256", "name": "respects", "type": "uint256" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" },
+          { "internalType": "bool", "name": "isResurrected", "type": "bool" },
+          { "internalType": "string", "name": "resurrectionNote", "type": "string" }
+        ],
+        "internalType": "struct DevGraveyard.Grave",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getGraveCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256[]", "name": "_ids", "type": "uint256[]" }
+    ],
+    "name": "getGravesBatch",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "address", "name": "owner", "type": "address" },
+          { "internalType": "string", "name": "projectName", "type": "string" },
+          { "internalType": "string", "name": "causeOfDeath", "type": "string" },
+          { "internalType": "string", "name": "livedFor", "type": "string" },
+          { "internalType": "string", "name": "lessonLearned", "type": "string" },
+          { "internalType": "string", "name": "techStack", "type": "string" },
+          { "internalType": "string", "name": "githubLink", "type": "string" },
+          { "internalType": "bool", "name": "isAnonymous", "type": "bool" },
+          { "internalType": "uint256", "name": "respects", "type": "uint256" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" },
+          { "internalType": "bool", "name": "isResurrected", "type": "bool" },
+          { "internalType": "string", "name": "resurrectionNote", "type": "string" }
+        ],
+        "internalType": "struct DevGraveyard.Grave[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_wallet", "type": "address" }
+    ],
+    "name": "getProfile",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "wallet", "type": "address" },
+          { "internalType": "string", "name": "username", "type": "string" },
+          { "internalType": "string", "name": "avatarUrl", "type": "string" },
+          { "internalType": "string", "name": "bio", "type": "string" },
+          { "internalType": "string", "name": "github", "type": "string" },
+          { "internalType": "string", "name": "instagram", "type": "string" },
+          { "internalType": "string", "name": "whatsapp", "type": "string" },
+          { "internalType": "uint256", "name": "joinedAt", "type": "uint256" },
+          { "internalType": "bool", "name": "exists", "type": "bool" }
+        ],
+        "internalType": "struct DevGraveyard.UserProfile",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_username", "type": "string" }
+    ],
+    "name": "getProfileByUsername",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "wallet", "type": "address" },
+          { "internalType": "string", "name": "username", "type": "string" },
+          { "internalType": "string", "name": "avatarUrl", "type": "string" },
+          { "internalType": "string", "name": "bio", "type": "string" },
+          { "internalType": "string", "name": "github", "type": "string" },
+          { "internalType": "string", "name": "instagram", "type": "string" },
+          { "internalType": "string", "name": "whatsapp", "type": "string" },
+          { "internalType": "uint256", "name": "joinedAt", "type": "uint256" },
+          { "internalType": "bool", "name": "exists", "type": "bool" }
+        ],
+        "internalType": "struct DevGraveyard.UserProfile",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_limit", "type": "uint256" },
+      { "internalType": "uint256", "name": "_offset", "type": "uint256" }
+    ],
+    "name": "getRecentGraves",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "address", "name": "owner", "type": "address" },
+          { "internalType": "string", "name": "projectName", "type": "string" },
+          { "internalType": "string", "name": "causeOfDeath", "type": "string" },
+          { "internalType": "string", "name": "livedFor", "type": "string" },
+          { "internalType": "string", "name": "lessonLearned", "type": "string" },
+          { "internalType": "string", "name": "techStack", "type": "string" },
+          { "internalType": "string", "name": "githubLink", "type": "string" },
+          { "internalType": "bool", "name": "isAnonymous", "type": "bool" },
+          { "internalType": "uint256", "name": "respects", "type": "uint256" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" },
+          { "internalType": "bool", "name": "isResurrected", "type": "bool" },
+          { "internalType": "string", "name": "resurrectionNote", "type": "string" }
+        ],
+        "internalType": "struct DevGraveyard.Grave[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getUserCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_graveId", "type": "uint256" },
+      { "internalType": "address", "name": "_user", "type": "address" }
+    ],
+    "name": "hasRespected",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "address", "name": "", "type": "address" }
+    ],
+    "name": "isFollowing",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_text", "type": "string" },
+      { "internalType": "string", "name": "_color", "type": "string" },
+      { "internalType": "int8", "name": "_rotation", "type": "int8" }
+    ],
+    "name": "postConfession",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_graveId", "type": "uint256" }
+    ],
+    "name": "pressF",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_id", "type": "uint256" },
+      { "internalType": "bool", "name": "_isCandle", "type": "bool" }
+    ],
+    "name": "reactConfession",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_graveId", "type": "uint256" },
+      { "internalType": "string", "name": "_resurrectionNote", "type": "string" }
+    ],
+    "name": "resurrectGrave",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_target", "type": "address" }
+    ],
+    "name": "unfollow",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_graveId", "type": "uint256" }
+    ],
+    "name": "unpressF",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "_avatarUrl", "type": "string" },
+      { "internalType": "string", "name": "_bio", "type": "string" },
+      { "internalType": "string", "name": "_github", "type": "string" },
+      { "internalType": "string", "name": "_instagram", "type": "string" },
+      { "internalType": "string", "name": "_whatsapp", "type": "string" }
+    ],
+    "name": "updateProfile",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

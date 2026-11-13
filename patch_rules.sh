@@ -1,1 +1,0 @@
-sed -i 's/data.lesson_learned is string && data.lesson_learned.size() <= 1000;/data.lesson_learned is string \&\& data.lesson_learned.size() <= 1000 \&\& (!data.keys().hasAny(["github_link"]) || (data.github_link is string \&\& data.github_link.size() <= 500));/g' firestore.rules

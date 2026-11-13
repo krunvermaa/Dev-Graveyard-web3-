@@ -1,1 +1,0 @@
-sed -i '/import { useAuth } from/a import { auth, githubProvider } from "../firebase";\nimport { linkWithPopup, GithubAuthProvider, signInWithPopup } from "firebase/auth";\nimport { Github, Search } from "lucide-react";' pages/SubmitGrave.tsx
